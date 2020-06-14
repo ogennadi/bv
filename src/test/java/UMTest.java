@@ -5,9 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UMTest {
     UM um;
+    Integer a = 1;
+    Integer b = 2;
+    Integer c = 3;
+
     @BeforeEach
     void setUp() {
         um = new UM();
+
     }
 
     @Test
@@ -70,5 +75,17 @@ class UMTest {
         um.exec(1, a, b, c);
 
         assertEquals(expected, um.get(a));
+    }
+
+    @Test
+    void arrayAmendmentShouldStoreRegisterCInOffsetBofArrayA() {
+        Integer expected = 76;
+        um.set(b, 4);
+        um.set(c, expected);
+        um.setArray(a, 0,0,0,0,0);
+
+        um.exec(2, a, b, c);
+
+        assertEquals(expected, um.getArray(a, um.get(b)));
     }
 }
