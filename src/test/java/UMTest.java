@@ -11,6 +11,27 @@ class UMTest {
     }
 
     @Test
+    void getShouldReturn0ForUnsetRegister() {
+        assertEquals(0, um.get(0));
+        assertEquals(0, um.get(1));
+        assertEquals(0, um.get(2));
+        assertEquals(0, um.get(3));
+        assertEquals(0, um.get(4));
+        assertEquals(0, um.get(5));
+        assertEquals(0, um.get(6));
+        assertEquals(0, um.get(7));
+    }
+
+    @Test
+    void getShouldReturnPreviouslySetValue() {
+        Integer expected = 5;
+        Integer a = 0;
+
+        um.set(a, expected);
+
+        assertEquals(expected, um.get(a) );
+    }
+    @Test
     void conditionalMoveCopiesBtoAifCisNot0() {
         Integer a = 1;
         Integer b = 2;
@@ -38,24 +59,16 @@ class UMTest {
     }
 
     @Test
-    void getShouldReturn0ForUnsetRegister() {
-        assertEquals(0, um.get(0));
-        assertEquals(0, um.get(1));
-        assertEquals(0, um.get(2));
-        assertEquals(0, um.get(3));
-        assertEquals(0, um.get(4));
-        assertEquals(0, um.get(5));
-        assertEquals(0, um.get(6));
-        assertEquals(0, um.get(7));
-    }
+    void arrayIndexShouldCopyOffsetCOfArrayBtoRegisterA() {
+        Integer expected = 156;
+        Integer a = 1;
+        Integer b = 2;
+        Integer c = 3;
+        um.set(c, 4);
+        um.setArray(b, 5, 6, 7, 8, expected);
 
-    @Test
-    void getShouldReturnPreviouslySetValue() {
-        Integer expected = 5;
-        Integer a = 0;
+        um.exec(1, a, b, c);
 
-        um.set(a, expected);
-
-        assertEquals(expected, um.get(a) );
+        assertEquals(expected, um.get(a));
     }
 }
