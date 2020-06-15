@@ -7,16 +7,19 @@ public class UM {
     private static final int ARRAY_INDEX = 1;
     private static final int ARRAY_AMENDMENT = 2;
     private static final int ADDITION = 3;
+    private static final int MULTIPLICATION = 4;
+    private static final int DIVISION = 5;
+    private static final int NOT_AND = 6;
     private final ArrayList<Integer> registers;
     private final HashMap<Integer, Integer[]> arrays;
 
     public UM() {
-        registers = new ArrayList<Integer>();
+        registers = new ArrayList<>();
         for (int i = 0; i < NUM_REGISTERS; i++) {
             registers.add(DEFAULT_VALUE);
         }
 
-        arrays = new HashMap<Integer, Integer[]>();
+        arrays = new HashMap<>();
     }
 
     public void set(Integer register, Integer value) {
@@ -28,7 +31,13 @@ public class UM {
     }
 
     public void exec(Integer op, Integer a, Integer b, Integer c) {
-        if (op == ADDITION) {
+        if (op == NOT_AND) {
+            registers.set(a, ~(registers.get(b) & registers.get(c)));
+        } else if (op == DIVISION) {
+            registers.set(a, registers.get(b) / registers.get(c));
+        } else if (op == MULTIPLICATION) {
+            registers.set(a, registers.get(b) * registers.get(c));
+        } else if (op == ADDITION) {
             registers.set(a, registers.get(b) + registers.get(c));
         } else if (op == ARRAY_AMENDMENT) {
             Integer[] array = arrays.get(a);

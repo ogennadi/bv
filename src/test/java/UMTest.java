@@ -12,7 +12,6 @@ class UMTest {
     @BeforeEach
     void setUp() {
         um = new UM();
-
     }
 
     @Test
@@ -111,5 +110,43 @@ class UMTest {
         um.exec(3, a, b, c);
 
         assertEquals(0, um.get(a));
+    }
+
+    @Test
+    void multiplicationsShouldStoreProductOfRegistersBandCMod2ToThe32InA() {
+        Integer valB = 0xffffffff;
+        Integer valC = 0x00000010;
+
+        um.set(b, valB);
+        um.set(c, valC);
+        um.exec(4, a, b, c);
+
+        assertEquals(0xfffffff0, um.get(a));
+    }
+
+    @Test
+    void divisionShouldStoreQuotientOfRegistersBandCInA() {
+        Integer valB = 5;
+        Integer valC = 2;
+
+        um.set(b, valB);
+        um.set(c, valC);
+        um.exec(5, a, b, c);
+
+        assertEquals(2, um.get(a));
+    }
+
+    @Test
+    void notAndShouldStoreNandOfRegistersBandCInA() {
+        Integer valB = 0xffff0000;
+        Integer valC = 0x00ff00ff;
+
+        um.set(b, valB);
+        um.set(c, valC);
+        um.exec(6, a, b, c);
+
+        assertEquals(0xff00ffff,
+                um.get(a),
+                "Got " + Integer.toBinaryString(um.get(a)));
     }
 }
