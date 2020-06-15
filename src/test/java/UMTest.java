@@ -88,4 +88,28 @@ class UMTest {
 
         assertEquals(expected, um.getArray(a, um.get(b)));
     }
+
+    @Test
+    void additionShouldStoreSumOfRegistersBandCinA() {
+        int valB = 4;
+        int valC = 5;
+
+        um.set(b, valB);
+        um.set(c, valC);
+        um.exec(3, a, b, c);
+
+        assertEquals(valB+valC, um.get(a));
+    }
+
+    @Test
+    void additionShouldStoreSumOfRegistersBandCMod2ToThe32inA() {
+        Integer valB = 0xffffffff;
+        Integer valC = 0x00000001;
+
+        um.set(b, valB);
+        um.set(c, valC);
+        um.exec(3, a, b, c);
+
+        assertEquals(0, um.get(a));
+    }
 }
