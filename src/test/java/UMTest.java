@@ -2,6 +2,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class UMTest {
     UM um;
@@ -148,5 +150,17 @@ class UMTest {
         assertEquals(0xff00ffff,
                 um.get(a),
                 "Got " + Integer.toBinaryString(um.get(a)));
+    }
+
+    @Test
+    void newUMshouldHaveRunningSetToTrue() {
+        assertTrue(um.getRunning());
+    }
+
+    @Test
+    void haltShouldSetRunningToFalse() {
+        um.exec(7, a, b, c);
+
+        assertFalse(um.getRunning());
     }
 }

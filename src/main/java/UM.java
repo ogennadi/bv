@@ -12,6 +12,7 @@ public class UM {
     private static final int NOT_AND = 6;
     private final ArrayList<Integer> registers;
     private final HashMap<Integer, Integer[]> arrays;
+    private boolean running;
 
     public UM() {
         registers = new ArrayList<>();
@@ -20,6 +21,7 @@ public class UM {
         }
 
         arrays = new HashMap<>();
+        running = true;
     }
 
     public void set(Integer register, Integer value) {
@@ -31,7 +33,9 @@ public class UM {
     }
 
     public void exec(Integer op, Integer a, Integer b, Integer c) {
-        if (op == NOT_AND) {
+        if (op == 7) {
+            running = false;
+        }else        if (op == NOT_AND) {
             registers.set(a, ~(registers.get(b) & registers.get(c)));
         } else if (op == DIVISION) {
             registers.set(a, registers.get(b) / registers.get(c));
@@ -58,5 +62,9 @@ public class UM {
 
     public Integer getArray(Integer index, Integer offset) {
         return arrays.get(index)[offset];
+    }
+
+    public boolean getRunning() {
+        return running;
     }
 }
